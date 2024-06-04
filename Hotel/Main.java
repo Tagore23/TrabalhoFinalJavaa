@@ -19,21 +19,19 @@ public class Main {
             System.out.println("6- Sair: ");
             System.out.println("=============================");
 
-            // Verifica se há um próximo inteiro antes de chamar nextInt()
-            if (scanner.hasNextInt()) {
                 escolha = scanner.nextInt();
                 switch (escolha) {
                     case 1:
                         cadastrarCliente();
                         break;
                     case 2:
-                        // Implemente as outras opções do menu aqui
+
                         break;
                     case 3:
-                        // Implemente as outras opções do menu aqui
+
                         break;
                     case 4:
-                        // Implemente as outras opções do menu aqui
+
                         break;
                     case 5:
                         verificarCadastros();
@@ -45,15 +43,10 @@ public class Main {
                         System.out.println("Opção inválida. Escolha novamente.");
                         break;
                 }
-            } else {
-                // Limpa o buffer do scanner em caso de entrada inválida
-                scanner.next();
-                System.out.println("Opção inválida. Escolha novamente.");
-                escolha = 0; // Define escolha como 0 para continuar no loop
-            }
+
         } while (escolha != 6);
 
-        scanner.close(); // Fechar o scanner ao finalizar
+        scanner.close();
     }
 
 
