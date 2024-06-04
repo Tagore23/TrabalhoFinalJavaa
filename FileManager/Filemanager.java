@@ -49,13 +49,27 @@ public class Filemanager {
         try (BufferedReader reader = new BufferedReader(new FileReader(CLIENTES_FILE))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
-                String[] partes = linha.split(",");
-                Cliente cliente = new Cliente(partes[0], Integer.parseInt(partes[1]), partes[2], Double.parseDouble(partes[3]));
-                clientes.add(cliente);
+                String[] partes = linha.split(",\\s*"); // Usando expressão regular para lidar com espaços após as vírgulas
+                // Verifica se há pelo menos 4 partes na linha
+                if (partes.length >= 4) {
+                    // Remove espaços em branco dos valores e cria o cliente
+                    String nome = partes[0].trim().replace("Nome: ", "");
+                    Integer idade = Integer.parseInt(partes[1].trim().replace("Idade: ", ""));
+                    String email = partes[2].trim().replace("E-mail: ", "");
+                    Integer telefone = Integer.parseInt(partes[3].trim().replace("Telefone: ", ""));
+                    Cliente cliente = new Cliente(nome, idade, email, telefone);
+                    clientes.add(cliente);
+                } else {
+                    // Exibe uma mensagem de erro se o formato da linha estiver incorreto
+                    System.out.println("Erro: Formato incorreto da linha no arquivo clientes.txt");
+                }
             }
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
+            // Captura tanto IOException quanto NumberFormatException em um único bloco catch
+            System.out.println("Erro ao ler os clientes do arquivo.");
             e.printStackTrace();
         }
         return clientes;
     }
+
 }

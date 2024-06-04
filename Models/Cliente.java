@@ -3,20 +3,17 @@ package Models;
 public class Cliente {
 
     private String nome, email;
-    private Integer idade;
-    private double telefone;
+    private Integer idade, telefone;
 
-    //Método para cadastrar o aluno
-    public Cliente(String nome, Integer idade, String email, double telefone) {
+    // Método para cadastrar o cliente
+    public Cliente(String nome, Integer idade, String email, Integer telefone) {
         this.nome = nome;
         this.idade = idade;
         this.email = email;
         this.telefone = telefone;
     }
 
-//Retorna os dados do aluno
-
-
+    // Retornar os dados do cliente
     public String getNome() {
         return nome;
     }
@@ -29,7 +26,7 @@ public class Cliente {
         return idade;
     }
 
-    public double getTelefone() {
+    public Integer getTelefone() {
         return telefone;
     }
 }

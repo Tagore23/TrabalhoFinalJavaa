@@ -1,0 +1,7 @@
+Cadastro de Cliente - Nome: joao, Idade: 20, E-mail: sim, Telefone: 40
+Cadastro de Cliente - Nome: joao, Idade: 20, E-mail: sim@gmail.com, Telefone: 49
+Cadastro de Cliente - Nome: SSSSS, Idade: 10, E-mail: sdadad, Telefone: 10
+Cadastro de Cliente - Nome: a, Idade: 1, E-mail: a, Telefone: 4
+Cadastro de Cliente - Nome: a, Idade: 2, E-mail: c, Telefone: 4
+Cadastro de Cliente - Nome: aaa, Idade: 2, E-mail: a, Telefone: 3
+Cadastro de Cliente - Nome: a, Idade: 2, E-mail: b, Telefone: 3
