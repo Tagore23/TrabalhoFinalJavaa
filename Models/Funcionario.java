@@ -25,6 +25,6 @@ abstract class Funcionario {
         this.horasmensais = horasmensais;
     }
 
-    public abstract void aumento();
+    public abstract void verInfo();
 
 }
