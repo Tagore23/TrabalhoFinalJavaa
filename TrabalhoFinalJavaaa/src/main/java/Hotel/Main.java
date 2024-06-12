@@ -21,7 +21,8 @@ public class Main {
             System.out.println("1- Cadastrar cliente: ");
             System.out.println("2- Remover cliente: ");
             System.out.println("3- Verificar cadastros: ");
-            System.out.println("4- Sair: ");
+            System.out.println("4- Verificar dados do gerente: ");
+            System.out.println("5- Sair: ");
             System.out.println("=============================");
 
             if (scanner.hasNextInt()) {
@@ -36,8 +37,10 @@ public class Main {
                         break;
                     case 3:
                         verificarCadastros();
+                        case 4:
+                        Gerente();
                         break;
-                    case 4:
+                    case 5:
                         logger.info("Saindo...");
                         break;
                     default:
@@ -49,7 +52,7 @@ public class Main {
                 logger.warn("Opção inválida. Escolha novamente.");
                 escolha = 0; // Define escolha como 0 para continuar no loop
             }
-        } while (escolha != 4);
+        } while (escolha != 5);
 
         scanner.close(); // Fechar o scanner ao finalizar
     }
@@ -125,5 +128,10 @@ public class Main {
             }
         } while (!entradaValida);
         return valor;
+    }
+ private static void Gerente() {
+        Gerente gerente = new Gerente();
+        gerente.verInfo();
+
     }
 }
