@@ -22,7 +22,8 @@ public class Main {
             System.out.println("2- Remover cliente: ");
             System.out.println("3- Verificar cadastros: ");
             System.out.println("4- Verificar dados do gerente: ");
-            System.out.println("5- Sair: ");
+            System.out.println("5- Cadastrar recepcionista: ");
+            System.out.println("6- Sair: ");
             System.out.println("=============================");
 
             if (scanner.hasNextInt()) {
@@ -37,10 +38,12 @@ public class Main {
                         break;
                     case 3:
                         verificarCadastros();
-                        case 4:
+                    case 4:
                         Gerente();
                         break;
                     case 5:
+                        Recepcionista();
+                    case 6:
                         logger.info("Saindo...");
                         break;
                     default:
@@ -52,7 +55,7 @@ public class Main {
                 logger.warn("Opção inválida. Escolha novamente.");
                 escolha = 0; // Define escolha como 0 para continuar no loop
             }
-        } while (escolha != 5);
+        } while (escolha != 6);
 
         scanner.close(); // Fechar o scanner ao finalizar
     }
@@ -129,9 +132,24 @@ public class Main {
         } while (!entradaValida);
         return valor;
     }
- private static void Gerente() {
-        Gerente gerente = new Gerente();
+    private static void Gerente() {
+        Models.Gerente gerente = new Models.Gerente();
         gerente.verInfo();
 
+    }
+
+    private static void Recepcionista(){
+        Scanner scanner = new Scanner(System.in);
+        logger.info("Cadastro de Recepcionista");
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Salario: ");
+        double salario = scanner.nextDouble();
+
+        System.out.print("Horas Mensais: ");
+        int horasmensais = scanner.nextInt();
+        Models.Recepcionista recepcionista = new Models.Recepcionista(nome, salario, horasmensais);
+        recepcionista.verInfo();
     }
 }
