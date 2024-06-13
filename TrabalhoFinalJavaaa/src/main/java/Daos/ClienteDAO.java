@@ -1,42 +1,21 @@
-package FileManager;
+package Daos;
 
 import Models.Cliente;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Filemanager {
-    private static final Logger logger = LogManager.getLogger(Filemanager.class);
-    private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa";
-    private static final String CLIENTES_FILE = DEFAULT_PATH + "\\clientes.txt";
+public class ClienteDAO {
+    private static final Logger logger = LogManager.getLogger(ClienteDAO.class);
+    private static final String CLIENTES_FILE = "clientes.txt";
 
-    public Filemanager() {
-        criarDiretorio(DEFAULT_PATH);
-    }
-
-    private void criarDiretorio(String caminho) {
-        File diretorio = new File(caminho);
-        if (!diretorio.exists())
-            diretorio.mkdir();
-    }
-
-    public boolean arquivoExiste(String nomeArquivo) {
-        File arquivo = new File(DEFAULT_PATH + "\\" + nomeArquivo);
-        return arquivo.exists();
-    }
-
-    public void escreverDetalhes(String nomeArquivo, String detalhes) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEFAULT_PATH + "\\" + nomeArquivo, true))) {
-            writer.write(detalhes + "\n");
-            logger.info("Detalhes gravados em " + nomeArquivo);
+    public void escreverDetalhes(Cliente cliente) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CLIENTES_FILE, true))) {
+            writer.write(cliente.toString() + "\n");
+            logger.info("Detalhes do cliente gravados.");
         } catch (IOException e) {
             logger.error("Erro ao escrever detalhes no arquivo.", e);
         }
@@ -67,7 +46,7 @@ public class Filemanager {
         return clientes;
     }
 
-    public boolean removerClientePorID(String nomeArquivo, int id) {
+    public boolean removerClientePorID(int id) {
         List<Cliente> clientes = lerClientes();
         List<Cliente> clientesAtualizados = clientes.stream()
                 .filter(cliente -> cliente.getId() != id)
@@ -77,7 +56,7 @@ public class Filemanager {
             return false;
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEFAULT_PATH + "\\" + nomeArquivo))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CLIENTES_FILE))) {
             for (Cliente cliente : clientesAtualizados) {
                 writer.write(cliente.toString() + "\n");
             }
