@@ -1,16 +1,13 @@
 package Models;
 
-public class Recepcionista extends Funcionario{
+public class Recepcionista extends Funcionario {
 
-    private int pontossatisfacao;
-    private int horasextras;
+
 
     public Recepcionista(String nome, Double salario, Integer horasmensais) {
         setNome(nome);
         setSalario(salario);
         setHorasmensais(horasmensais);
-        this.pontossatisfacao = 0;
-        this.horasextras = 0;
     }
 
     @Override
@@ -20,5 +17,13 @@ public class Recepcionista extends Funcionario{
         System.out.println("Salário: " + this.getSalario());
         System.out.println("Horas Mensais: " + this.getHorasmensais());
     }
-    
+
+    @Override
+    public String toString() {
+        return "Recepcionista{" +
+                "nome='" + getNome() + '\'' +
+                ", salario=" + getSalario() +
+                ", horasmensais=" + getHorasmensais() +
+                '}';
+    }
 }

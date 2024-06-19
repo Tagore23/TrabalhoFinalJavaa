@@ -4,11 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 
-public class Filemanager {
-    private static final Logger logger = LogManager.getLogger(Filemanager.class);
+public class FileManager {
+    private static final Logger logger = LogManager.getLogger(FileManager.class);
     private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa";
 
-    public Filemanager() {
+    public FileManager() {
         criarDiretorio(DEFAULT_PATH);
     }
 
