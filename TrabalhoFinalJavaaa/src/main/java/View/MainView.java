@@ -1,6 +1,7 @@
 package View;
 
 import Models.Cliente;
+import Models.Quarto;
 import Models.Recepcionista;
 import java.util.List;
 import java.util.Scanner;

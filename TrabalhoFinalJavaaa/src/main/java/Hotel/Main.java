@@ -2,9 +2,11 @@ package Hotel;
 
 import Controllers.ClienteController;
 import Controllers.FuncionarioController;
+import Controllers.QuartoController;
 import Daos.ClienteDAO;
 import Daos.FileManager;
 import View.MainView;
+import View.QuartoView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,10 +15,15 @@ public class Main {
 
     public static void main(String[] args) {
         MainView view = new MainView();
+        QuartoView view = new QuartoView();
+        QuartoController controller = new QuartoController(QuartoView, MainView);
         FileManager fileManager = new FileManager();
         ClienteDAO clienteDAO = new ClienteDAO();
         ClienteController clienteController = new ClienteController(view, clienteDAO);
         FuncionarioController funcionarioController = new FuncionarioController(view);
+        QuartoController quartoController = new QuartoController(view);
+        controller.showQuartos();
+
 
         int escolha;
         do {
@@ -46,4 +53,9 @@ public class Main {
             }
         } while (escolha != 6);
     }
+
+
+
+
 }
+
