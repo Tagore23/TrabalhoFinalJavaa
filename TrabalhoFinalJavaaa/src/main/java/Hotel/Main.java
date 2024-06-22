@@ -5,6 +5,7 @@ import Controllers.FuncionarioController;
 import Controllers.QuartoController;
 import Daos.ClienteDAO;
 import Daos.FileManager;
+import Daos.QuartoDAO;
 import View.MainView;
 import View.QuartoView;
 import org.apache.logging.log4j.LogManager;
@@ -15,16 +16,13 @@ public class Main {
 
     public static void main(String[] args) {
         MainView view = new MainView();
-        QuartoView view = new QuartoView();
-        QuartoController controller = new QuartoController(QuartoView, MainView);
-        FileManager fileManager = new FileManager();
         ClienteDAO clienteDAO = new ClienteDAO();
         ClienteController clienteController = new ClienteController(view, clienteDAO);
         FuncionarioController funcionarioController = new FuncionarioController(view);
-        QuartoController quartoController = new QuartoController(view);
-        controller.showQuartos();
 
-
+        QuartoView quartoView = new QuartoView();
+        FileManager fileManager = new FileManager();
+        QuartoController quartoController = new QuartoController(quartoView, fileManager);
         int escolha;
         do {
             escolha = view.mostrarMenuPrincipal();
@@ -47,15 +45,13 @@ public class Main {
                 case 6:
                     logger.info("Saindo...");
                     break;
+                case 7:
+                    quartoController.start();
+                    break;
                 default:
                     logger.warn("Opção inválida. Escolha novamente.");
                     break;
             }
-        } while (escolha != 6);
+        } while (escolha != 7);
     }
-
-
-
-
 }
-
