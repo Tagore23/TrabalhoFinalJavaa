@@ -1,6 +1,7 @@
 package View;
 
 import Models.Quarto;
+
 import java.util.Scanner;
 
 public class QuartoView {

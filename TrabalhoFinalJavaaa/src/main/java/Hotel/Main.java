@@ -22,7 +22,9 @@ public class Main {
 
         QuartoView quartoView = new QuartoView();
         FileManager fileManager = new FileManager();
-        QuartoController quartoController = new QuartoController(quartoView, fileManager);
+        QuartoDAO quartoDAO = new QuartoDAO("C:\\Java\\TrabalhoFinalJavaa\\quartos.txt", fileManager);
+        QuartoController quartoController = new QuartoController(quartoView, quartoDAO);
+
         int escolha;
         do {
             escolha = view.mostrarMenuPrincipal();
@@ -43,10 +45,10 @@ public class Main {
                     funcionarioController.cadastrarRecepcionista();
                     break;
                 case 6:
-                    logger.info("Saindo...");
+                    quartoController.start();
                     break;
                 case 7:
-                    quartoController.start();
+                    logger.info("Saindo...");
                     break;
                 default:
                     logger.warn("Opção inválida. Escolha novamente.");

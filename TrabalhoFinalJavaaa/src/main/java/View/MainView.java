@@ -1,7 +1,6 @@
 package View;
 
 import Models.Cliente;
-import Models.Quarto;
 import Models.Recepcionista;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +19,8 @@ public class MainView {
         System.out.println("3- Verificar cadastros: ");
         System.out.println("4- Verificar dados do gerente: ");
         System.out.println("5- Cadastrar recepcionista: ");
-        System.out.println("6- Sair: ");
+        System.out.println("6- Gerenciar quartos: ");
+        System.out.println("7- Sair: ");
         System.out.println("=============================");
         System.out.print("Escolha uma opção: ");
 

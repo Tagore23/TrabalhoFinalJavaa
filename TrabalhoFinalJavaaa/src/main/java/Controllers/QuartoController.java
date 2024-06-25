@@ -1,19 +1,21 @@
 package Controllers;
+
 import Models.Quarto;
 import View.QuartoView;
-import Daos.FileManager;
+import Daos.QuartoDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuartoController {
     private List<Quarto> quartos;
     private QuartoView view;
-    private FileManager fileManager;
+    private QuartoDAO quartoDAO;
 
-    public QuartoController(QuartoView view, FileManager fileManager) {
+    public QuartoController(QuartoView view, QuartoDAO quartoDAO) {
         this.view = view;
-        this.fileManager = fileManager;
-        this.quartos = new ArrayList<>(List.of(fileManager.readQuartos()));
+        this.quartoDAO = quartoDAO;
+        this.quartos = new ArrayList<>(List.of(quartoDAO.readQuartos()));
     }
 
     public void showQuartos() {
@@ -31,7 +33,7 @@ public class QuartoController {
         }
         if (quartoToRemove != null) {
             quartos.remove(quartoToRemove);
-            fileManager.writeQuartos(quartos.toArray(new Quarto[]));
+            quartoDAO.writeQuartos(quartos.toArray(new Quarto[0]));
             view.displayMessage("Quarto " + numero + " removido com sucesso.");
         } else {
             view.displayMessage("Quarto " + numero + " está indisponível.");
