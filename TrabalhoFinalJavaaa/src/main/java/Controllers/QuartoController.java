@@ -19,7 +19,7 @@ public class QuartoController {
     }
 
     public void showQuartos() {
-        quartos = new ArrayList<>(List.of(quartoDAO.readQuartos())); // Refresh the list of rooms
+        quartos = new ArrayList<>(List.of(quartoDAO.readQuartos()));
         view.displayQuartos(quartos.toArray(new Quarto[0]));
     }
 
