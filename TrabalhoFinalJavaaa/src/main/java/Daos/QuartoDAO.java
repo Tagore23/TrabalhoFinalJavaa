@@ -16,7 +16,7 @@ public class QuartoDAO {
     public QuartoDAO(String filePath, FileManager fileManager) {
         this.filePath = filePath;
         this.fileManager = fileManager;
-        this.fileManager.criarDiretorio(new File(filePath).getParent()); // Cria o diretório, se não existir
+        this.fileManager.criarDiretorio(new File(filePath).getParent());
     }
 
     public Quarto[] readQuartos() {
@@ -53,7 +53,8 @@ public class QuartoDAO {
     }
 
     public void writeQuartos(Quarto[] quartos) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        File file = new File(filePath);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Quarto quarto : quartos) {
                 writer.write(quarto.getNumero() + "," + quarto.getValor() + "," + quarto.getAndar());
                 writer.newLine();

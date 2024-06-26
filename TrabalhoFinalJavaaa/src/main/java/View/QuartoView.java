@@ -39,7 +39,8 @@ public class QuartoView {
         System.out.println("Menu:");
         System.out.println("1. Mostrar Quartos");
         System.out.println("2. Remover Quarto");
-        System.out.println("3. Sair");
+        System.out.println("3. Selecionar Quarto");
+        System.out.println("4. Sair");
     }
 
     public int getMenuOption() {

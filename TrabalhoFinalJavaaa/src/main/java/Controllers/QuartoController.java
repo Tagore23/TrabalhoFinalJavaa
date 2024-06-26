@@ -19,6 +19,7 @@ public class QuartoController {
     }
 
     public void showQuartos() {
+        quartos = new ArrayList<>(List.of(quartoDAO.readQuartos())); // Refresh the list of rooms
         view.displayQuartos(quartos.toArray(new Quarto[0]));
     }
 
@@ -40,6 +41,22 @@ public class QuartoController {
         }
     }
 
+    public void selectQuarto() {
+        int numero = view.getQuartoNumero();
+        Quarto quartoSelecionado = null;
+        for (Quarto quarto : quartos) {
+            if (quarto.getNumero() == numero) {
+                quartoSelecionado = quarto;
+                break;
+            }
+        }
+        if (quartoSelecionado != null) {
+            view.displayMessage("Quarto selecionado: " + quartoSelecionado);
+        } else {
+            view.displayMessage("Quarto " + numero + " está indisponível.");
+        }
+    }
+
     public void start() {
         while (true) {
             view.displayMenu();
@@ -52,6 +69,9 @@ public class QuartoController {
                     removeQuarto();
                     break;
                 case 3:
+                    selectQuarto();
+                    break;
+                case 4:
                     return;
                 default:
                     view.displayMessage("Opção inválida.");

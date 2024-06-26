@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class ClienteController {
+public class  ClienteController {
     private static final Logger logger = LogManager.getLogger(ClienteController.class);
     private static int clienteID = 1;
     private MainView view;

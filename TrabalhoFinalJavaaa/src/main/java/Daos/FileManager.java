@@ -19,7 +19,11 @@ public class FileManager {
     public void criarDiretorio(String caminho) {
         File diretorio = new File(caminho);
         if (!diretorio.exists()) {
-            diretorio.mkdir();
+            if (diretorio.mkdirs()) {
+                logger.info("Diretório criado: " + caminho);
+            } else {
+                logger.error("Falha ao criar diretório: " + caminho);
+            }
         }
     }
 
@@ -32,6 +36,7 @@ public class FileManager {
         List<Quarto> quartos = new ArrayList<>();
         File file = new File(DEFAULT_PATH + "\\quartos.txt");
         if (!file.exists() || file.length() == 0) {
+            logger.info("Arquivo de quartos não encontrado ou vazio, retornando lista vazia.");
             return quartos.toArray(new Quarto[0]);
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -65,6 +70,7 @@ public class FileManager {
                 writer.write(quarto.getNumero() + "," + quarto.getValor() + "," + quarto.getAndar());
                 writer.newLine();
             }
+            logger.info("Quartos escritos no arquivo com sucesso.");
         } catch (IOException e) {
             logger.error("Erro ao escrever no arquivo de quartos.", e);
         }
