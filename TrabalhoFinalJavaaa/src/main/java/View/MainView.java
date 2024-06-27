@@ -1,94 +1,91 @@
 package View;
 
 import Models.Cliente;
-import Models.Recepcionista;
+import Models.Funcionario;
+import Models.Gerente;
+import Models.Quarto;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class MainView {
-    private Scanner scanner;
-
-    public MainView() {
-        this.scanner = new Scanner(System.in);
-    }
+    private Scanner scanner = new Scanner(System.in);
 
     public int mostrarMenuPrincipal() {
-        System.out.println("=============================");
-        System.out.println("1- Cadastrar cliente: ");
-        System.out.println("2- Remover cliente: ");
-        System.out.println("3- Verificar cadastros: ");
-        System.out.println("4- Verificar dados do gerente: ");
-        System.out.println("5- Cadastrar recepcionista: ");
-        System.out.println("6- Gerenciar quartos: ");
-        System.out.println("7- Sair: ");
-        System.out.println("=============================");
+        System.out.println("1. Cadastrar Cliente");
+        System.out.println("2. Remover Cliente");
+        System.out.println("3. Verificar Cadastros de Clientes");
+        System.out.println("4. Ver Info Gerente");
+        System.out.println("5. Cadastrar Funcionário");
+        System.out.println("6. Verificar Funcionários");
+        System.out.println("7. Escolher Quarto");
+        System.out.println("8. Sair");
         System.out.print("Escolha uma opção: ");
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, insira um número inteiro.");
-            scanner.next();
-        }
-        int escolha = scanner.nextInt();
-        scanner.nextLine();
-        return escolha;
+        return scanner.nextInt();
     }
 
     public String getNomeCliente() {
-        System.out.print("Nome: ");
-        return scanner.nextLine();
+        System.out.print("Nome do Cliente: ");
+        return scanner.next();
     }
 
     public int getIdadeCliente() {
-        System.out.print("Idade: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, insira um número inteiro.");
-            scanner.next();
-        }
-        int idade = scanner.nextInt();
-        scanner.nextLine();
-        return idade;
+        System.out.print("Idade do Cliente: ");
+        return scanner.nextInt();
     }
 
     public String getEmailCliente() {
-        System.out.print("E-mail: ");
-        return scanner.nextLine();
+        System.out.print("Email do Cliente: ");
+        return scanner.next();
     }
 
     public int getTelefoneCliente() {
-        System.out.print("Telefone: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, insira um número inteiro.");
-            scanner.next();
-        }
-        int telefone = scanner.nextInt();
-        scanner.nextLine();
-        return telefone;
+        System.out.print("Telefone do Cliente: ");
+        return scanner.nextInt();
     }
 
     public int getIdClienteParaRemover() {
-        System.out.print("Digite o ID do cliente a ser removido: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, insira um número inteiro.");
-            scanner.next();
-        }
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        return id;
+        System.out.print("ID do Cliente para remover: ");
+        return scanner.nextInt();
     }
 
     public void mostrarClienteCadastrado(Cliente cliente) {
-        System.out.println("Cliente cadastrado com sucesso:");
-        System.out.println(cliente);
+        System.out.println("Cliente cadastrado com sucesso: " + cliente);
     }
 
     public void mostrarClientesCadastrados(List<Cliente> clientes) {
-        if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado.");
-        } else {
-            System.out.println("Clientes cadastrados:");
-            for (Cliente cliente : clientes) {
-                System.out.println(cliente);
-            }
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente);
+        }
+    }
+
+    public String getNomeFuncionario() {
+        System.out.print("Nome do Funcionário: ");
+        return scanner.next();
+    }
+
+    public double getSalarioFuncionario() {
+        System.out.print("Salário do Funcionário: ");
+        return scanner.nextDouble();
+    }
+
+    public int getHorasMensaisFuncionario() {
+        System.out.print("Horas Mensais do Funcionário: ");
+        return scanner.nextInt();
+    }
+
+    public String getFuncaoFuncionario() {
+        System.out.print("Função do Funcionário: ");
+        return scanner.next();
+    }
+
+    public void mostrarFuncionarioCadastrado(Funcionario funcionario) {
+        System.out.println("Funcionário cadastrado com sucesso: " + funcionario);
+    }
+
+    public void mostrarFuncionariosCadastrados(List<Funcionario> funcionarios) {
+        for (Funcionario funcionario : funcionarios) {
+            System.out.println(funcionario);
         }
     }
 
@@ -96,35 +93,19 @@ public class MainView {
         System.out.println(mensagem);
     }
 
-    public String getNomeRecepcionista() {
-        System.out.print("Nome: ");
-        return scanner.nextLine();
+    public void mostrarInfoGerente(Gerente gerente) {
+        System.out.println("Informações do Gerente:");
+        System.out.println("Nome: " + gerente.getNome());
+        System.out.println("Salário: " + gerente.getSalario());
+        System.out.println("Horas Mensais: " + gerente.getHorasMensais());
     }
 
-    public double getSalarioRecepcionista() {
-        System.out.print("Salário: ");
-        while (!scanner.hasNextDouble()) {
-            System.out.println("Por favor, insira um valor decimal.");
-            scanner.next();
+    public int escolherQuarto(List<Quarto> quartosDisponiveis) {
+        System.out.println("Quartos Disponíveis:");
+        for (Quarto quarto : quartosDisponiveis) {
+            System.out.println(quarto);
         }
-        double salario = scanner.nextDouble();
-        scanner.nextLine();
-        return salario;
-    }
-
-    public int getHorasMensaisRecepcionista() {
-        System.out.print("Horas Mensais: ");
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, insira um número inteiro.");
-            scanner.next();
-        }
-        int horasMensais = scanner.nextInt();
-        scanner.nextLine();
-        return horasMensais;
-    }
-
-    public void mostrarRecepcionistaCadastrada(Recepcionista recepcionista) {
-        System.out.println("Recepcionista cadastrada com sucesso:");
-        System.out.println(recepcionista);
+        System.out.print("Digite o número do quarto desejado: ");
+        return scanner.nextInt();
     }
 }

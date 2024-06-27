@@ -10,13 +10,18 @@ import java.util.List;
 
 public class FileManager {
     private static final Logger logger = LogManager.getLogger(FileManager.class);
-    private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa";
+    private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa"; // Caminho padrão - ajuste conforme necessário
 
     public FileManager() {
         criarDiretorio(DEFAULT_PATH);
     }
 
     public void criarDiretorio(String caminho) {
+        if (caminho == null) {
+            logger.error("Caminho de diretório é nulo.");
+            return;
+        }
+
         File diretorio = new File(caminho);
         if (!diretorio.exists()) {
             if (diretorio.mkdirs()) {
@@ -27,14 +32,9 @@ public class FileManager {
         }
     }
 
-    public boolean arquivoExiste(String caminhoArquivo) {
-        File arquivo = new File(caminhoArquivo);
-        return arquivo.exists();
-    }
-
-    public Quarto[] readQuartos() {
+    public Quarto[] readQuartos(String filePath) {
         List<Quarto> quartos = new ArrayList<>();
-        File file = new File(DEFAULT_PATH + "\\quartos.txt");
+        File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
             logger.info("Arquivo de quartos não encontrado ou vazio, retornando lista vazia.");
             return quartos.toArray(new Quarto[0]);
@@ -63,8 +63,8 @@ public class FileManager {
         return quartos.toArray(new Quarto[0]);
     }
 
-    public void writeQuartos(Quarto[] quartos) {
-        File file = new File(DEFAULT_PATH + "\\quartos.txt");
+    public void writeQuartos(String filePath, Quarto[] quartos) {
+        File file = new File(filePath);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Quarto quarto : quartos) {
                 writer.write(quarto.getNumero() + "," + quarto.getValor() + "," + quarto.getAndar());

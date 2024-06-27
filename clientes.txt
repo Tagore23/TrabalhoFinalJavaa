@@ -1,0 +1,5 @@
+1,a,10,s@gmail.com,99999,1
+0,a,19,ggg@gmail.com,99999,0
+0,a,29,adas@gmail.com,9999,0
+0,daosdfkjgf,19,aaa@gmail.com,1881818,0
+3,jgjjgjjj,1000,t@gmail.com,838181,0

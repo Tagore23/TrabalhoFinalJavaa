@@ -1,8 +1,11 @@
 package Controllers;
 
-import Models.Quarto;
-import View.QuartoView;
+import Daos.ClienteDAO;
 import Daos.QuartoDAO;
+import Models.Cliente;
+import Models.Quarto;
+import View.MainView;
+import View.QuartoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,50 +14,74 @@ public class QuartoController {
     private List<Quarto> quartos;
     private QuartoView view;
     private QuartoDAO quartoDAO;
+    private ClienteDAO clienteDAO;
 
-    public QuartoController(QuartoView view, QuartoDAO quartoDAO) {
+    public QuartoController(QuartoView view, QuartoDAO quartoDAO, ClienteDAO clienteDAO) {
         this.view = view;
         this.quartoDAO = quartoDAO;
+        this.clienteDAO = clienteDAO;
         this.quartos = new ArrayList<>(List.of(quartoDAO.readQuartos()));
     }
 
     public void showQuartos() {
         quartos = new ArrayList<>(List.of(quartoDAO.readQuartos()));
-        view.displayQuartos(quartos.toArray(new Quarto[0]));
-    }
-
-    public void removeQuarto() {
-        int numero = view.getQuartoNumero();
-        Quarto quartoToRemove = null;
+        view.displayMessage("Quartos Disponíveis:");
         for (Quarto quarto : quartos) {
-            if (quarto.getNumero() == numero) {
-                quartoToRemove = quarto;
-                break;
-            }
-        }
-        if (quartoToRemove != null) {
-            quartos.remove(quartoToRemove);
-            quartoDAO.writeQuartos(quartos.toArray(new Quarto[0]));
-            view.displayMessage("Quarto " + numero + " removido com sucesso.");
-        } else {
-            view.displayMessage("Quarto " + numero + " está indisponível.");
+            view.displayMessage(quarto.toString());
         }
     }
 
-    public void selectQuarto() {
-        int numero = view.getQuartoNumero();
-        Quarto quartoSelecionado = null;
-        for (Quarto quarto : quartos) {
-            if (quarto.getNumero() == numero) {
-                quartoSelecionado = quarto;
+    public void associarClienteAQuarto() {
+        int clienteId = view.getClienteId();
+        List<Quarto> quartosDisponiveis = List.of(quartoDAO.readQuartos());
+        int numeroQuarto = view.escolherQuarto(quartosDisponiveis);
+
+        Cliente cliente = clienteDAO.buscarClientePorId(clienteId);
+        if (cliente == null) {
+            view.displayMessage("Cliente não encontrado.");
+            return;
+        }
+
+        Quarto quarto = null;
+        for (Quarto q : quartosDisponiveis) {
+            if (q.getNumero() == numeroQuarto) {
+                quarto = q;
                 break;
             }
         }
-        if (quartoSelecionado != null) {
-            view.displayMessage("Quarto selecionado: " + quartoSelecionado);
-        } else {
-            view.displayMessage("Quarto " + numero + " está indisponível.");
+
+        if (quarto == null) {
+            view.displayMessage("Quarto não encontrado.");
+            return;
         }
+
+        if (cliente.getNumeroQuarto() != 0) {
+            view.displayMessage("Cliente já está associado a um quarto.");
+            return;
+        }
+
+        cliente.setNumeroQuarto(numeroQuarto);
+        clienteDAO.atualizarCliente(cliente);
+        view.displayMessage("Cliente " + clienteId + " associado ao quarto " + numeroQuarto + " com sucesso.");
+    }
+
+    public void removerClienteDoQuarto() {
+        int clienteId = view.getClienteId();
+
+        Cliente cliente = clienteDAO.buscarClientePorId(clienteId);
+        if (cliente == null) {
+            view.displayMessage("Cliente não encontrado.");
+            return;
+        }
+
+        if (cliente.getNumeroQuarto() == 0) {
+            view.displayMessage("Cliente não está associado a nenhum quarto.");
+            return;
+        }
+
+        cliente.setNumeroQuarto(0); // Remover associação do cliente com quarto
+        clienteDAO.atualizarCliente(cliente);
+        view.displayMessage("Cliente " + clienteId + " removido do quarto com sucesso.");
     }
 
     public void start() {
@@ -66,10 +93,10 @@ public class QuartoController {
                     showQuartos();
                     break;
                 case 2:
-                    removeQuarto();
+                    associarClienteAQuarto();
                     break;
                 case 3:
-                    selectQuarto();
+                    removerClienteDoQuarto();
                     break;
                 case 4:
                     return;

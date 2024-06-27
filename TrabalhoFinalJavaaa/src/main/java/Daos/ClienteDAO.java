@@ -1,70 +1,108 @@
 package Daos;
 
 import Models.Cliente;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ClienteDAO {
-    private static final Logger logger = LogManager.getLogger(ClienteDAO.class);
-    private static final String CLIENTES_FILE = "clientes.txt";
+    private String filePath;
+    private FileManager fileManager;
+
+    public ClienteDAO(String filePath) {
+        this.filePath = filePath;
+        this.fileManager = new FileManager(); // Inicializando o FileManager aqui
+        this.fileManager.criarDiretorio(filePath);
+    }
 
     public void escreverDetalhes(Cliente cliente) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CLIENTES_FILE, true))) {
-            writer.write(cliente.toString() + "\n");
-            logger.info("Detalhes do cliente gravados.");
-        } catch (IOException e) {
-            logger.error("Erro ao escrever detalhes no arquivo.", e);
-        }
+        List<Cliente> clientes = lerClientes();
+        int proximoId = proximoId(clientes); // Obtém o próximo ID disponível
+        cliente.setId(proximoId); // Define o próximo ID para o cliente
+        clientes.add(cliente);
+        escreverClientes(clientes);
     }
 
     public List<Cliente> lerClientes() {
         List<Cliente> clientes = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(CLIENTES_FILE))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String linha;
-            while ((linha = reader.readLine()) != null) {
-                String[] partes = linha.split(", ");
-                if (partes.length >= 5) {
-                    Cliente cliente = new Cliente(
-                            Integer.parseInt(partes[0].trim()), // ID
-                            partes[1].trim(), // Nome
-                            Integer.parseInt(partes[2].trim()), // Idade
-                            partes[3].trim(), // Email
-                            Integer.parseInt(partes[4].trim()) // Telefone
-                    );
-                    clientes.add(cliente);
-                } else {
-                    logger.error("Erro: Formato incorreto da linha no arquivo clientes.txt");
-                }
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                int id = Integer.parseInt(dados[0]);
+                String nome = dados[1];
+                int idade = Integer.parseInt(dados[2]);
+                String email = dados[3];
+                int telefone = Integer.parseInt(dados[4]);
+                int numeroQuarto = Integer.parseInt(dados[5]);
+                Cliente cliente = new Cliente(id, nome, idade, email, telefone, numeroQuarto);
+                clientes.add(cliente);
             }
-        } catch (IOException | NumberFormatException e) {
-            logger.error("Erro ao ler os clientes do arquivo.", e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return clientes;
     }
 
-    public boolean removerClientePorID(int id) {
-        List<Cliente> clientes = lerClientes();
-        List<Cliente> clientesAtualizados = clientes.stream()
-                .filter(cliente -> cliente.getId() != id)
-                .collect(Collectors.toList());
-
-        if (clientes.size() == clientesAtualizados.size()) {
-            return false;
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CLIENTES_FILE))) {
-            for (Cliente cliente : clientesAtualizados) {
-                writer.write(cliente.toString() + "\n");
+    private void escreverClientes(List<Cliente> clientes) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (Cliente cliente : clientes) {
+                bw.write(cliente.getId() + "," + cliente.getNome() + "," +
+                        cliente.getIdade() + "," + cliente.getEmail() + "," +
+                        cliente.getTelefone() + "," + cliente.getNumeroQuarto());
+                bw.newLine();
             }
         } catch (IOException e) {
-            logger.error("Erro ao atualizar o arquivo após a remoção.", e);
-            return false;
+            e.printStackTrace();
         }
+    }
 
-        return true;
+    private int proximoId(List<Cliente> clientes) {
+        int maiorId = 0;
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() > maiorId) {
+                maiorId = cliente.getId();
+            }
+        }
+        return maiorId + 1; // Próximo ID disponível
+    }
+
+    public boolean removerClientePorID(int id) {
+        List<Cliente> clientes = lerClientes();
+        Cliente clienteARemover = null;
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == id) {
+                clienteARemover = cliente;
+                break;
+            }
+        }
+        if (clienteARemover != null) {
+            clientes.remove(clienteARemover);
+            escreverClientes(clientes);
+            return true;
+        }
+        return false;
+    }
+
+    public void atualizarCliente(Cliente clienteAtualizado) {
+        List<Cliente> clientes = lerClientes();
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getId() == clienteAtualizado.getId()) {
+                clientes.set(i, clienteAtualizado);
+                break;
+            }
+        }
+        escreverClientes(clientes);
+    }
+
+    public Cliente buscarClientePorId(int id) {
+        List<Cliente> clientes = lerClientes();
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == id) {
+                return cliente;
+            }
+        }
+        return null;
     }
 }

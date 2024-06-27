@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class  ClienteController {
+public class ClienteController {
     private static final Logger logger = LogManager.getLogger(ClienteController.class);
     private static int clienteID = 1;
     private MainView view;
@@ -25,7 +25,7 @@ public class  ClienteController {
         String email = view.getEmailCliente();
         int telefone = view.getTelefoneCliente();
 
-        Cliente cliente = new Cliente(clienteID++, nome, idade, email, telefone);
+        Cliente cliente = new Cliente( nome, idade, email, telefone);
         clienteDAO.escreverDetalhes(cliente);
         view.mostrarClienteCadastrado(cliente);
     }
@@ -44,5 +44,16 @@ public class  ClienteController {
     public void verificarCadastros() {
         List<Cliente> clientes = clienteDAO.lerClientes();
         view.mostrarClientesCadastrados(clientes);
+    }
+
+    public void verificarClientes() {
+        List<Cliente> clientes = clienteDAO.lerClientes();
+        if (clientes.isEmpty()) {
+            view.mostrarMensagem("Não há clientes cadastrados.");
+        } else {
+            for (Cliente cliente : clientes) {
+                view.mostrarMensagem(cliente.toString()); // Exemplo simples de exibição, adaptar conforme necessário
+            }
+        }
     }
 }

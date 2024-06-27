@@ -1,30 +1,39 @@
 package Models;
 
-abstract class Funcionario {
-
+public abstract class Funcionario {
+    private int id;
     private String nome;
     private double salario;
-    private int horasmensais;
+    private int horasMensais;
+
+    public Funcionario(int id, String nome, double salario, int horasMensais) {
+        this.id = id;
+        this.nome = nome;
+        this.salario = salario;
+        this.horasMensais = horasMensais;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+
     public double getSalario() {
         return salario;
     }
-    public void setSalario(double salario) {
-        this.salario = salario;
+
+    public int getHorasMensais() {
+        return horasMensais;
     }
-    public int getHorasmensais() {
-        return horasmensais;
-    }
-    public void setHorasmensais(int horasmensais) {
-        this.horasmensais = horasmensais;
-    }
+
+
+    public abstract String getFuncao();
+
+
+    public abstract void exibirInformacoes();
 
     public abstract void verInfo();
-
 }

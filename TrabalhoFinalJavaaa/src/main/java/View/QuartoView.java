@@ -2,6 +2,7 @@ package View;
 
 import Models.Quarto;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class QuartoView {
@@ -11,11 +12,8 @@ public class QuartoView {
         this.scanner = new Scanner(System.in);
     }
 
-    public void displayQuartos(Quarto[] quartos) {
-        System.out.println("Opções de Quartos Disponíveis:");
-        for (Quarto quarto : quartos) {
-            System.out.println(quarto);
-        }
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 
     public int getQuartoNumero() {
@@ -31,15 +29,24 @@ public class QuartoView {
         }
     }
 
-    public void displayMessage(String message) {
-        System.out.println(message);
+    public int getClienteId() {
+        while (true) {
+            System.out.print("Digite o ID do cliente: ");
+            String input = scanner.nextLine();
+            try {
+                int id = Integer.parseInt(input);
+                return id;
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+            }
+        }
     }
 
     public void displayMenu() {
         System.out.println("Menu:");
         System.out.println("1. Mostrar Quartos");
-        System.out.println("2. Remover Quarto");
-        System.out.println("3. Selecionar Quarto");
+        System.out.println("2. Associar Cliente a um Quarto");
+        System.out.println("3. Remover Cliente de um Quarto");
         System.out.println("4. Sair");
     }
 
@@ -50,6 +57,24 @@ public class QuartoView {
             try {
                 int option = Integer.parseInt(input);
                 return option;
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+            }
+        }
+    }
+
+    public int escolherQuarto(List<Quarto> quartos) {
+        while (true) {
+            System.out.print("Escolha um número de quarto disponível: ");
+            String input = scanner.nextLine();
+            try {
+                int numero = Integer.parseInt(input);
+                for (Quarto quarto : quartos) {
+                    if (quarto.getNumero() == numero) {
+                        return numero;
+                    }
+                }
+                System.out.println("Número de quarto não encontrado na lista.");
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Por favor, digite um número.");
             }

@@ -4,31 +4,28 @@ import Controllers.ClienteController;
 import Controllers.FuncionarioController;
 import Controllers.QuartoController;
 import Daos.ClienteDAO;
-import Daos.FileManager;
+import Daos.FuncionarioDAO;
 import Daos.QuartoDAO;
+import Models.Gerente;
 import View.MainView;
 import View.QuartoView;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
-
     public static void main(String[] args) {
         MainView view = new MainView();
-        ClienteDAO clienteDAO = new ClienteDAO();
+        FuncionarioDAO funcionarioDAO = new FuncionarioDAO("funcionarios.txt");
+        ClienteDAO clienteDAO = new ClienteDAO("clientes.txt");
+        QuartoDAO quartoDAO = new QuartoDAO("quartos.txt"); // Certifique-se de que "quartos.txt" é o caminho correto onde o arquivo deve ser criado
+
+        FuncionarioController funcionarioController = new FuncionarioController(view, funcionarioDAO);
         ClienteController clienteController = new ClienteController(view, clienteDAO);
-        FuncionarioController funcionarioController = new FuncionarioController(view);
+        QuartoController quartoController = new QuartoController(new QuartoView(), quartoDAO, clienteDAO);
+        Gerente gerente = new Gerente();
 
-        QuartoView quartoView = new QuartoView();
-        FileManager fileManager = new FileManager();
-        QuartoDAO quartoDAO = new QuartoDAO("C:\\Java\\TrabalhoFinalJavaa\\quartos.txt", fileManager);
-        QuartoController quartoController = new QuartoController(quartoView, quartoDAO);
-
-        int escolha;
+        int opcao;
         do {
-            escolha = view.mostrarMenuPrincipal();
-            switch (escolha) {
+            opcao = view.mostrarMenuPrincipal();
+            switch (opcao) {
                 case 1:
                     clienteController.cadastrarCliente();
                     break;
@@ -39,21 +36,24 @@ public class Main {
                     clienteController.verificarCadastros();
                     break;
                 case 4:
-                    funcionarioController.verInfoGerente();
+                    gerente.verInfo();
                     break;
                 case 5:
-                    funcionarioController.cadastrarRecepcionista();
+                    funcionarioController.cadastrarFuncionario();
                     break;
                 case 6:
-                    quartoController.start();
+                    funcionarioController.verificarFuncionarios();
                     break;
                 case 7:
-                    logger.info("Saindo...");
+                    quartoController.start(); // Iniciar menu de operações de quartos
+                    break;
+                case 8:
+                    view.mostrarMensagem("Saindo...");
                     break;
                 default:
-                    logger.warn("Opção inválida. Escolha novamente.");
+                    view.mostrarMensagem("Opção inválida. Tente novamente.");
                     break;
             }
-        } while (escolha != 7);
+        } while (opcao != 8);
     }
 }

@@ -13,20 +13,22 @@ public class QuartoDAO {
     private String filePath;
     private FileManager fileManager;
 
-    public QuartoDAO(String filePath, FileManager fileManager) {
+    public QuartoDAO(String filePath) {
         this.filePath = filePath;
-        this.fileManager = fileManager;
-        this.fileManager.criarDiretorio(new File(filePath).getParent());
+        this.fileManager = new FileManager(); // Inicializa o FileManager com o construtor padrão
+        criarDiretorio(filePath); // Chama o método criarDiretorio com o caminho do arquivo
+    }
+
+
+    private void criarDiretorio(String filePath) {
+        this.fileManager.criarDiretorio(new File(filePath).getParent()); // Utiliza new File(filePath).getParent() para obter o diretório pai
     }
 
     public Quarto[] readQuartos() {
         List<Quarto> quartos = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
-            quartos.add(new Quarto(1, 150.0, 1));
-            quartos.add(new Quarto(2, 200.0, 2));
-            quartos.add(new Quarto(3, 250.0, 3));
-            writeQuartos(quartos.toArray(new Quarto[0]));
+            inicializarQuartosPadrao(); // Inicializa com quartos padrão se o arquivo não existir ou estiver vazio
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
@@ -50,6 +52,14 @@ public class QuartoDAO {
             }
         }
         return quartos.toArray(new Quarto[0]);
+    }
+
+    private void inicializarQuartosPadrao() {
+        List<Quarto> quartos = new ArrayList<>();
+        quartos.add(new Quarto(1, 150.0, 1));
+        quartos.add(new Quarto(2, 200.0, 2));
+        quartos.add(new Quarto(3, 250.0, 3));
+        writeQuartos(quartos.toArray(new Quarto[0]));
     }
 
     public void writeQuartos(Quarto[] quartos) {
