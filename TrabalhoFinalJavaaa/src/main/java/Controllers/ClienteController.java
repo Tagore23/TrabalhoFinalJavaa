@@ -52,7 +52,7 @@ public class ClienteController {
             view.mostrarMensagem("Não há clientes cadastrados.");
         } else {
             for (Cliente cliente : clientes) {
-                view.mostrarMensagem(cliente.toString()); // Exemplo simples de exibição, adaptar conforme necessário
+                view.mostrarMensagem(cliente.toString());
             }
         }
     }

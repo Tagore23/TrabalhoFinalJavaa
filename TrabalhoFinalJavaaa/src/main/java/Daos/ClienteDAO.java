@@ -12,14 +12,14 @@ public class ClienteDAO {
 
     public ClienteDAO(String filePath) {
         this.filePath = filePath;
-        this.fileManager = new FileManager(); // Inicializando o FileManager aqui
+        this.fileManager = new FileManager();
         this.fileManager.criarDiretorio(filePath);
     }
 
     public void escreverDetalhes(Cliente cliente) {
         List<Cliente> clientes = lerClientes();
-        int proximoId = proximoId(clientes); // Obtém o próximo ID disponível
-        cliente.setId(proximoId); // Define o próximo ID para o cliente
+        int proximoId = proximoId(clientes);
+        cliente.setId(proximoId);
         clientes.add(cliente);
         escreverClientes(clientes);
     }
@@ -65,7 +65,7 @@ public class ClienteDAO {
                 maiorId = cliente.getId();
             }
         }
-        return maiorId + 1; // Próximo ID disponível
+        return maiorId + 1;
     }
 
     public boolean removerClientePorID(int id) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FileManager {
     private static final Logger logger = LogManager.getLogger(FileManager.class);
-    private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa"; // Caminho padrão - ajuste conforme necessário
+    private static final String DEFAULT_PATH = "C:\\Java\\TrabalhoFinalJavaa";
 
     public FileManager() {
         criarDiretorio(DEFAULT_PATH);

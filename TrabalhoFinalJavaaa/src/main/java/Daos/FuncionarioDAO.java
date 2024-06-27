@@ -17,8 +17,8 @@ public class FuncionarioDAO {
 
     public FuncionarioDAO(String filePath) {
         this.filePath = filePath;
-        this.fileManager = new FileManager(); // Inicializa o FileManager com o construtor padrão
-        criarDiretorio(filePath); // Chama o método criarDiretorio com o caminho do arquivo
+        this.fileManager = new FileManager();
+        criarDiretorio(filePath);
     }
 
     private void criarDiretorio(String filePath) {
@@ -26,7 +26,7 @@ public class FuncionarioDAO {
             logger.error("Caminho de arquivo é nulo.");
             return;
         }
-        this.fileManager.criarDiretorio(new File(filePath).getParent()); // Utiliza new File(filePath).getParent() para obter o diretório pai
+        this.fileManager.criarDiretorio(new File(filePath).getParent());
     }
 
     public void cadastrarFuncionario(Funcionario funcionario) {
@@ -39,7 +39,7 @@ public class FuncionarioDAO {
         List<Funcionario> funcionarios = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists()) {
-            inicializarArquivo(); // Inicializa com funcionários padrão se o arquivo não existir
+            inicializarArquivo();
         } else {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String linha;

@@ -79,7 +79,7 @@ public class QuartoController {
             return;
         }
 
-        cliente.setNumeroQuarto(0); // Remover associação do cliente com quarto
+        cliente.setNumeroQuarto(0);
         clienteDAO.atualizarCliente(cliente);
         view.displayMessage("Cliente " + clienteId + " removido do quarto com sucesso.");
     }

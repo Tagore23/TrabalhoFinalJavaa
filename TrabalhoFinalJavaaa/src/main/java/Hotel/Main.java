@@ -45,7 +45,7 @@ public class Main {
                     funcionarioController.verificarFuncionarios();
                     break;
                 case 7:
-                    quartoController.start(); // Iniciar menu de operações de quartos
+                    quartoController.start();
                     break;
                 case 8:
                     view.mostrarMensagem("Saindo...");
