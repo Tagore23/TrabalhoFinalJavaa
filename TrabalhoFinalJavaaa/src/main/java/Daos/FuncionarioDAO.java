@@ -51,7 +51,6 @@ public class FuncionarioDAO {
                     int horasMensais = Integer.parseInt(dados[3]);
                     String funcao = dados[4];
 
-                    // Verifica o tipo de funcionário pela função
                     Funcionario funcionario;
                     if (funcao.equalsIgnoreCase("Gerente")) {
                         funcionario = new Gerente();
@@ -82,7 +81,7 @@ public class FuncionarioDAO {
 
     private void inicializarArquivo() {
         List<Funcionario> funcionarios = new ArrayList<>();
-        // Exemplo de inicialização com funcionários padrão
+        
         funcionarios.add(new Gerente());
         funcionarios.add(new FuncionarioGeral(2, "Maria", 2000.0, 160, "Atendente"));
         escreverFuncionarios(funcionarios);

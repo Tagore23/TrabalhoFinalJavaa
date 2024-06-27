@@ -15,7 +15,7 @@ public class Main {
         MainView view = new MainView();
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO("funcionarios.txt");
         ClienteDAO clienteDAO = new ClienteDAO("clientes.txt");
-        QuartoDAO quartoDAO = new QuartoDAO("quartos.txt"); // Certifique-se de que "quartos.txt" é o caminho correto onde o arquivo deve ser criado
+        QuartoDAO quartoDAO = new QuartoDAO("quartos.txt");
 
         FuncionarioController funcionarioController = new FuncionarioController(view, funcionarioDAO);
         ClienteController clienteController = new ClienteController(view, clienteDAO);

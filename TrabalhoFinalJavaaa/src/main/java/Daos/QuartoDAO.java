@@ -15,20 +15,20 @@ public class QuartoDAO {
 
     public QuartoDAO(String filePath) {
         this.filePath = filePath;
-        this.fileManager = new FileManager(); // Inicializa o FileManager com o construtor padrão
-        criarDiretorio(filePath); // Chama o método criarDiretorio com o caminho do arquivo
+        this.fileManager = new FileManager();
+        criarDiretorio(filePath);
     }
 
 
     private void criarDiretorio(String filePath) {
-        this.fileManager.criarDiretorio(new File(filePath).getParent()); // Utiliza new File(filePath).getParent() para obter o diretório pai
+        this.fileManager.criarDiretorio(new File(filePath).getParent());
     }
 
     public Quarto[] readQuartos() {
         List<Quarto> quartos = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
-            inicializarQuartosPadrao(); // Inicializa com quartos padrão se o arquivo não existir ou estiver vazio
+            inicializarQuartosPadrao();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
