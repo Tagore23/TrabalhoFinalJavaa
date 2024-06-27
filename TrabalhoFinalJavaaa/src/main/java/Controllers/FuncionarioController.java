@@ -23,7 +23,6 @@ public class FuncionarioController {
         int horasMensais = view.getHorasMensaisFuncionario();
         String funcao = view.getFuncaoFuncionario();
 
-        // Gerar um novo ID único
         int id = gerarNovoId();
 
         Funcionario funcionario;
