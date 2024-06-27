@@ -31,48 +31,4 @@ public class FileManager {
             }
         }
     }
-
-    public Quarto[] readQuartos(String filePath) {
-        List<Quarto> quartos = new ArrayList<>();
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-            logger.info("Arquivo de quartos não encontrado ou vazio, retornando lista vazia.");
-            return quartos.toArray(new Quarto[0]);
-        } else {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] data = line.split(",");
-                    if (data.length == 3) {
-                        try {
-                            int numero = Integer.parseInt(data[0]);
-                            double valor = Double.parseDouble(data[1]);
-                            int andar = Integer.parseInt(data[2]);
-                            quartos.add(new Quarto(numero, valor, andar));
-                        } catch (NumberFormatException e) {
-                            logger.error("Erro ao converter os dados: " + line, e);
-                        }
-                    } else {
-                        logger.error("Dados inválidos: " + line);
-                    }
-                }
-            } catch (IOException e) {
-                logger.error("Erro ao ler o arquivo de quartos.", e);
-            }
-        }
-        return quartos.toArray(new Quarto[0]);
-    }
-
-    public void writeQuartos(String filePath, Quarto[] quartos) {
-        File file = new File(filePath);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (Quarto quarto : quartos) {
-                writer.write(quarto.getNumero() + "," + quarto.getValor() + "," + quarto.getAndar());
-                writer.newLine();
-            }
-            logger.info("Quartos escritos no arquivo com sucesso.");
-        } catch (IOException e) {
-            logger.error("Erro ao escrever no arquivo de quartos.", e);
-        }
-    }
 }
